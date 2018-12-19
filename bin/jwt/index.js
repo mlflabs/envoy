@@ -23,9 +23,8 @@ var opts = {
     router: router
 };
  
-
 const envoy = require('../../app')(opts);
 envoy.events.on('listening', function() {
   console.log('[OK]  Server is up');
 });
- 
+   
