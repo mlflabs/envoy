@@ -9,11 +9,11 @@ module.exports = (opts) => {
   const init = require('./lib/init')
   const events = require('events')
   const ee = new events.EventEmitter()
-  const auth = require('./lib/auth')
   const morgan = require('morgan')
   const cors = require('./lib/cors')
   const path = require('path')
   app.opts = require('./lib/env').getCredentials(opts)
+  const auth = require('./lib/auth')
   const nano = Nano(app.opts.couchHost)
   const dbName = app.dbName = app.opts.databaseName
 
