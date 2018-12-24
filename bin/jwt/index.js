@@ -14,6 +14,7 @@ var opts = {
     databaseName: 'jwttest',
     usersDatabaseName: 'jwtusers',
     auth: 'jwt',
+    access: 'meta',
     authTokenSecret: 'secret',
     authTokenLength: '1d',
     logFormat: 'dev',

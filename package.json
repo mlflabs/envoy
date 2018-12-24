@@ -28,6 +28,7 @@
   "dependencies": {
     "async": "^2.6.1",
     "basic-auth": "^2.0.0",
+    "better-sqlite3": "^5.2.1",
     "body-parser": "^1.18.3",
     "cfenv": "^1.1.0",
     "changesreader": "^1.1.2",
@@ -36,10 +37,10 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "jsonwebtoken": "^8.4.0",
+    "level": "^4.0.0",
     "morgan": "^1.9.1",
     "nano": "^7.1.0",
     "request": "^2.88.0",
-    "sqlite3": "^4.0.4",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

@@ -42,5 +42,6 @@ jsconfig.json
 # test script
 test.sh
 
-# sqlite databases
+# databases
 *.sqlite
+data/*

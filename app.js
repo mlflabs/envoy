@@ -1,6 +1,7 @@
 module.exports = (opts) => {
   const express = require('express')
   const app = module.exports = express()
+  app.opts = require('./lib/env').getCredentials(opts)
   const compression = require('compression')
   const session = require('express-session')
   const Nano = require('nano')
@@ -12,7 +13,6 @@ module.exports = (opts) => {
   const morgan = require('morgan')
   const cors = require('./lib/cors')
   const path = require('path')
-  app.opts = require('./lib/env').getCredentials(opts)
   const auth = require('./lib/auth')
   const nano = Nano(app.opts.couchHost)
   const dbName = app.dbName = app.opts.databaseName
@@ -59,6 +59,7 @@ module.exports = (opts) => {
     app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }))
 
     // session support
+    //TODO: option for no session handler
     if (opts && opts.sessionHandler) {
       app.use(opts.sessionHandler)
     } else {
@@ -113,7 +114,8 @@ module.exports = (opts) => {
       }
 
       if (err != null) {
-        process.exit(1)
+        console.log('Loading ERRORS: err');
+        //process.exit(1)
       }
 
       main()
