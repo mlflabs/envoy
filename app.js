@@ -114,7 +114,7 @@ module.exports = (opts) => {
       }
 
       if (err != null) {
-        console.log('Loading ERRORS: err');
+        console.log(err);
         //process.exit(1)
       }
 
