@@ -33,6 +33,7 @@
     "cfenv": "^1.1.0",
     "changesreader": "^1.1.2",
     "compression": "^1.7.3",
+    "deep-diff": "^1.0.2",
     "dotenv": "^6.2.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
