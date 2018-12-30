@@ -1,7 +1,8 @@
 module.exports = (opts) => {
   const express = require('express')
   const app = module.exports = express()
-  app.opts = require('./lib/env').getCredentials(opts)
+  const env = require('./lib/env').setup(opts);
+  app.opts = env.opts;
   const compression = require('compression')
   const session = require('express-session')
   const Nano = require('nano')
@@ -20,7 +21,10 @@ module.exports = (opts) => {
   // app meta data
   app.db = nano.db.use(dbName)
   app.usersdb = nano.db.use('_users')
-  app.metaKey = 'com_cloudant_meta'
+  env.db = app.db; //make env our central opts, env point
+  env.nano = nano;
+  env.usersdb = app.usersdb;
+
   app.events = ee
   app.cloudant = nano
   app.serverURL = app.opts.couchHost
