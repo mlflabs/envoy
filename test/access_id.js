@@ -42,12 +42,12 @@ describe('misc utils tests', function () {
     res = access.canRead(data.doc3, data.test3);
     assert.equal(res, false);
 
-    res = access.canRead(data.doc1, data.test2);
+    res = access.canRead(data.doc1, data.test4);
     assert.equal(res, false);
-    res = access.canRead(data.doc2, data.test1);
+    res = access.canRead(data.doc2, data.test4);
     assert.equal(res, false);
 
     done();
   });
-  
+
 })

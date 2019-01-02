@@ -12,7 +12,7 @@ var remote = null
 
 describe('adduser', function () {
   before(function () {
-    var e = env.getCredentials()
+    var e = env.setup()
     remote = require('nano')('http://' + e.url)
   })
 

@@ -18,7 +18,7 @@ var userCount = 0
 
 // Delete specified databases
 testUtils.cleanup = function (dbs, done) {
-  env.getCredentials()
+  env.setup()
 
   var num = dbs.length
 
@@ -34,7 +34,7 @@ testUtils.cleanup = function (dbs, done) {
 }
 
 testUtils.url = function (user, password) {
-  var e = env.getCredentials()
+  var e = env.setup()
   return url.format({
     protocol: 'http',
     auth: user + ':' + password,

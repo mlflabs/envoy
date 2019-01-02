@@ -1,4 +1,4 @@
-module.doc1 = {
+exports.doc1 = {
   _id: '1',
   meta_access: {
     users: {
@@ -19,7 +19,7 @@ module.doc1 = {
     }
   }
 };
-module.doc2 = {
+exports.doc2 = {
   _id: '2',
   meta_access: {
     users: {
@@ -39,7 +39,7 @@ module.doc2 = {
     }
   }
 };
-module.doc3 = {
+exports.doc3 = {
   _id: '3',
   meta_access: {
     users: {
@@ -60,7 +60,7 @@ module.doc3 = {
   }
 };
 
-module.doc4 = {
+exports.doc4 = {
   _id: '4',
   meta_access: {
     users: {
@@ -72,7 +72,7 @@ module.doc4 = {
   }
 };
 
-module.mike = {
+exports.mike = {
   name: 'mike',
   channels: {
     read: {
@@ -92,7 +92,7 @@ module.mike = {
     }
   }
 }
-module.test1 = {
+exports.test1 = {
   name: 'test',
   channels: {
     test: {
@@ -105,7 +105,7 @@ module.test1 = {
     }
   }
 }
-module.test2 = {
+exports.test2 = {
   name: 'test',
   channels: {
     test: {
@@ -117,13 +117,21 @@ module.test2 = {
     }
   }
 }
-module.test3 = {
+exports.test3 = {
   name: 'test',
   channels: {
     test: {
       r: false,
       w: false
     },
+    invalid: {
+
+    }
+  }
+}
+exports.test4 = {
+  name: 'test',
+  channels: {
     invalid: {
 
     }

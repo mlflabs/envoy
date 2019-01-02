@@ -23,7 +23,7 @@ describe('environment variable tests - Bluemix mode', function (done) {
 
   // parses VCAP_SERVICES successfully
   it('parse VCAP_SERVICES', function (done) {
-    var e = env.getCredentials()
+    var e = setup()
     assert.strictEqual(e.couchHost,
       'https://theusername:thepassword@theusername.cloudant.com')
     assert.strictEqual(e.databaseName, 'mydb')
@@ -35,7 +35,7 @@ describe('environment variable tests - Bluemix mode', function (done) {
   // assumes envoy when missing process.env.ENVOY_DATABASE_NAME
   it('missing ENVOY_DATABASE_NAME', function (done) {
     delete process.env.ENVOY_DATABASE_NAME
-    var e = env.getCredentials()
+    var e = env.setup()
     assert.strictEqual(e.databaseName, 'envoy')
     done()
   })
@@ -46,7 +46,7 @@ describe('environment variable tests - Bluemix mode', function (done) {
     process.env.VCAP_SERVICES = '{"badjson}'
 
     assert.throws(function () {
-      env.getCredentials()
+      env.setup()
     })
 
     done()
@@ -57,7 +57,7 @@ describe('environment variable tests - Bluemix mode', function (done) {
     process.env.ENVOY_DATABASE_NAME = 'mydb'
     process.env.VCAP_SERVICES = '{"someservice":[]}'
     assert.throws(function () {
-      env.getCredentials()
+      env.setup()
     })
 
     done()
@@ -68,7 +68,7 @@ describe('environment variable tests - Bluemix mode', function (done) {
     process.env.ENVOY_DATABASE_NAME = 'mydb'
     process.env.VCAP_SERVICES = '{"cloudantNoSQLDB":[]}'
     assert.throws(function () {
-      env.getCredentials()
+      env.setup()
     })
 
     done()
@@ -94,7 +94,7 @@ describe('environment variable tests - Piecemeal mode', function () {
 
   // parses VCAP_SERVICES successfully
   it('piecemeal mode successful', function (done) {
-    var e = env.getCredentials()
+    var e = env.setup()
     assert.strictEqual(e.couchHost, 'https://thehost')
     assert.strictEqual(e.port, '8080')
     assert.strictEqual(e.databaseName, 'mydb')
@@ -107,7 +107,7 @@ describe('environment variable tests - Piecemeal mode', function () {
     process.env.PORT = '8080'
     process.env.ENVOY_DATABASE_NAME = 'mydb'
     assert.throws(function () {
-      env.getCredentials()
+      env.setup()
     })
     done()
   })
@@ -117,7 +117,7 @@ describe('environment variable tests - Piecemeal mode', function () {
     process.env.COUCH_HOST = 'https://thehost'
     process.env.ENVOY_DATABASE_NAME = 'mydb'
     delete process.env.PORT
-    var e = env.getCredentials()
+    var e = env.setup()
     assert.strictEqual(e.port, 8000)
     done()
   })
@@ -128,7 +128,7 @@ describe('environment variable tests - Piecemeal mode', function () {
     process.env.ENVOY_DATABASE_NAME = 'mydb'
     process.env.PORT = '49a'
     assert.throws(function () {
-      env.getCredentials()
+      env.setup()
     })
     done()
   })
