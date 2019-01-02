@@ -1,8 +1,7 @@
 module.exports = (opts) => {
   const express = require('express')
   const app = module.exports = express()
-  const env = require('./lib/env').setup(opts);
-  app.opts = env.opts;
+  app.opts = require('./lib/env').setup(opts);
   const compression = require('compression')
   const session = require('express-session')
   const Nano = require('nano')
@@ -21,9 +20,6 @@ module.exports = (opts) => {
   // app meta data
   app.db = nano.db.use(dbName)
   app.usersdb = nano.db.use('_users')
-  env.db = app.db; //make env our central opts, env point
-  env.nano = nano;
-  env.usersdb = app.usersdb;
 
   app.events = ee
   app.cloudant = nano
@@ -69,7 +65,7 @@ module.exports = (opts) => {
     } else {
       console.log('[OK]  Using default session handler')
       app.use(session({
-        secret: app.metaKey,
+        secret: app.opts.sessionKey,
         resave: true,
         saveUninitialized: true
       }))
