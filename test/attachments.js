@@ -30,55 +30,65 @@ describe('CRUD', function () {
     })
   })
 
-  it('create an attachment and replicate it', function () {
-    return localBob.putAttachment('mydoc', 'att.txt', ATT_TXT, 'text/plain').then(function (data) {
+  it('create an attachment and replicate it', async () => {
+    try{
+      const data = await localBob.putAttachment('mydoc', 'att.txt', ATT_TXT, 'text/plain');
       assert.strictEqual(typeof data, 'object')
-      return localBob.replicate.to(remoteBob)
-    }).then(function () {
-      assert(true)
-    }).catch(function (e) {
-      // shouldn't get here'
+      await localBob.replicate.to(remoteBob, (err, data) =>{
+        if(data.ok)
+          assert(true)
+
+        assert(false);
+      });
+      
+    }
+    catch(err) {
       assert(false)
-    })
+    }
   })
 
-  it('replicate attachment back again', function () {
-    return localBob.replicate.from(remoteBob).then(function (d) {
-      return localBob.get('mydoc')
-    }).then(function (data) {
-      assert.strictEqual(typeof data, 'object')
-      assert.strictEqual(typeof data._attachments, 'object')
-      assert.strictEqual(typeof data._attachments['att.txt'], 'object')
-      assert.strictEqual(data._attachments['att.txt'].content_type, 'text/plain')
-    }).catch(function (e) {
-      // shouldn't get here'
+  it('replicate attachment back again', async () => {
+    try{
+      const d = localBob.replicate.from(remoteBob, async (data)=>{
+        data = await localBob.get('mydoc');
+        assert.strictEqual(typeof data, 'object')
+        assert.strictEqual(typeof data._attachments, 'object')
+        assert.strictEqual(typeof data._attachments['att.txt'], 'object')
+        assert.strictEqual(data._attachments['att.txt'].content_type, 'text/plain')
+      });
+    }
+    catch(err){
       assert(false)
-    })
+    }
   })
 
-  it('fetch attachment from the server', function () {
-    return remoteBob.getAttachment('mydoc', 'att.txt').then(function (data) {
-      data = data.toString('utf8')
-      assert.strictEqual(data, 'abc')
-    }).catch(function (e) {
-      // shouldn't get here
-      console.log(e.toString())
+  it('fetch attachment from the server', async () => {
+    try{
+      remoteBob.getAttachment('mydoc', 'att.txt').then(data=>{
+        data = data.toString('utf8')
+        assert.strictEqual(data, 'abc')
+      });
+      
+    }
+    catch(err){
       assert(false)
-    })
+    }
   })
 
-  it('update an attachment from the server', function () {
-    return remoteBob.get('mydoc').then(function (data) {
-      return remoteBob.putAttachment('mydoc', 'att.txt', data._rev, ATT_TXT2, 'text/plain')
-    }).then(function (data) {
-      assert.strictEqual(typeof data, 'object')
-      assert.strictEqual(data.id, 'mydoc')
-      assert.strictEqual(typeof data.rev, 'string')
-      assert.strictEqual(data.ok, true)
-    }).catch(function (e) {
-      // shouldn't get here
+  it('update an attachment from the server', async () => {
+    try{
+      let d = await remoteBob.get('mydoc');
+      d = await remoteBob.putAttachment('mydoc', 'att.txt', d._rev, ATT_TXT2, 'text/plain')
+      assert.strictEqual(typeof d, 'object')
+      assert.strictEqual(d.id, 'mydoc')
+      assert.strictEqual(typeof d.rev, 'string')
+      assert.strictEqual(d.ok, true)
+
+    }
+    catch(err){
       assert(false)
-    })
+    }
+
   })
 
   it('delete an attachment from the server', function () {

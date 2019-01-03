@@ -7,7 +7,7 @@ var assert = require('assert')
 var PouchDB = require('pouchdb')
 
 describe('GET all_docs', function () {
-  it('GET /db/_all_docs with no parameters', async (done) => {
+  it('GET /db/_all_docs with no parameters', async () => {
     // create two users, one who has 5 docs, the other 10, in the
     // the same database. Ensure that each user gets only their own data
     let docCount = 5
@@ -62,10 +62,10 @@ describe('GET all_docs', function () {
       assert.strictEqual(row.id, row.key)
     })
     */
-    done();
+
   })
 
-  it('GET /db/_bulk_docs with include_docs=true parameter', async (done) => {
+  it('GET /db/_bulk_docs with include_docs=true parameter', async () => {
     // create two users, one who has 5 docs, the other 10, in the
     // the same database. Ensure that each user gets only their own data
     let docCount = 5;
@@ -118,10 +118,10 @@ describe('GET all_docs', function () {
       assert.strictEqual(typeof row.doc, 'object')
     })
     */
-    done();
+ 
   })
 
-  it('GET /db/_all_docs with keys parameters', async (done) => {
+  it('GET /db/_all_docs with keys parameters', async () => {
     let docCount = 5
     let docs = testUtils.makeDocs(docCount)
     let remote = null
@@ -159,10 +159,9 @@ describe('GET all_docs', function () {
         // commenting this out for now
         // assert.strictEqual(typeof row.doc,'undefined');
       })
-    done();
   })
 
-  it('GET /db/_all_docs with keys and include_docs=true', function (done) {
+  it('GET /db/_all_docs with keys and include_docs=true', function () {
     var docCount = 5
     var docs = testUtils.makeDocs(docCount)
     var remote = null
@@ -196,7 +195,7 @@ describe('GET all_docs', function () {
         assert.strictEqual(row.id, row.key)
         assert.strictEqual(typeof row.doc, 'object')
       })
-      done();
+
     })
 
     

@@ -12,13 +12,20 @@ describe('stream processing', function () {
     var ws = fs.createWriteStream(tmp)
     fs.createReadStream('./test/simulatedchanges.txt', { encoding: 'utf8' })
       .pipe(utils.liner())
-      .pipe(access.authRemover())
+      .pipe(access.authCheckStream())
       .pipe(ws)
       .on('close', function () {
         var output = fs.readFileSync(tmp, 'utf8')
         // this should parse as JSON
-        JSON.parse(output)
-        done()
+        try{
+          JSON.parse(output)
+          done()
+        }
+        catch(err){
+          console.log(err);
+        }
+        
+        
       })
   })
 })

@@ -76,7 +76,7 @@ describe('bulk_docs', function () {
     })
   })
 
-  it('POST /db/_bulk_docs with bad docs parameter', function (done) {
+  it('POST /db/_bulk_docs with bad docs parameter', function () {
     testUtils.createUser().then(function (remoteURL) {
       var request = require('request')
       var r = {
@@ -88,7 +88,6 @@ describe('bulk_docs', function () {
       request(r, function (err, data, body) {
         assert.strictEqual(err, null)
         assert.strictEqual(data.statusCode, 400)
-        done()
       })
     })
   })

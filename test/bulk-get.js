@@ -79,12 +79,13 @@ describe('bulk_get', function () {
     })
   })
 
-  it('POST /db/_bulk_get with missing docs parameter', function () {
-    return remote.bulkGet({}).then(function (response) {
-      // we shouldn't get here
-      assert(false)
-    }).catch(function (e) {
-      assert.strictEqual(e.status, 400)
-    })
+  it('POST /db/_bulk_get with missing docs parameter', async () => {
+    try {
+      let fail = await remote.bulkGet({})
+      assert(false);
+    }
+    catch(err){
+      assert(true);
+    }
   })
 })

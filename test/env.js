@@ -23,7 +23,7 @@ describe('environment variable tests - Bluemix mode', function (done) {
 
   // parses VCAP_SERVICES successfully
   it('parse VCAP_SERVICES', function (done) {
-    var e = setup()
+    var e = env.setup()
     assert.strictEqual(e.couchHost,
       'https://theusername:thepassword@theusername.cloudant.com')
     assert.strictEqual(e.databaseName, 'mydb')
