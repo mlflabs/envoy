@@ -196,8 +196,9 @@ describe('GET all_docs', function () {
         assert.strictEqual(row.id, row.key)
         assert.strictEqual(typeof row.doc, 'object')
       })
+      done();
     })
 
-    done();
+    
   })
 })

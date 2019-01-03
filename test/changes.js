@@ -12,15 +12,12 @@ const wait = (ms) => {
 }
 
 describe('changes', function () {
-  it('sequence', function () {
-    var docCount = 2
-    var docs = testUtils.makeDocs(docCount)
-
-    var remote = null
-
-    var seq1 = ''
-
-    var id; var rev
+  it('sequence', async () => {
+    let docCount = 2
+    let docs = testUtils.makeDocs(docCount)
+    let remote = null
+    let seq1 = ''
+    let id; var rev
 
     return testUtils.createUser().then(function (remoteURL) {
       remote = new PouchDB(remoteURL)
@@ -37,7 +34,7 @@ describe('changes', function () {
       assert(response.results.length >= 1)
       seq1 = response.last_seq
       // Update a document
-      var newDoc = testUtils.makeDocs(1)[0]
+      let newDoc = testUtils.makeDocs(1)[0]
       newDoc._id = response.results[0].id
       newDoc._rev = response.results[0].changes[0].rev
       return remote.put(newDoc)
