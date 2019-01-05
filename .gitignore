@@ -45,3 +45,6 @@ test.sh
 # databases
 *.sqlite
 data/*
+
+#debug scripts
+pouchdb7

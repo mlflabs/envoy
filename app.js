@@ -44,12 +44,12 @@ module.exports = (opts) => {
     const production = (app.opts.production && app.opts.production === 'true')
     if (app.opts.static) {
       console.log('[OK]  Serving out directory: ' + app.opts.static)
-      app.use('/', express.static(app.opts.static))
+      console.log('Static folder: ', express.static(app.opts.static));
+      app.use('/public', express.static(app.opts.static))
     } else if (!production) {
       // setup static public directory
       app.use(express.static(path.join(__dirname, 'public')))
     }
-
     // enable cors
     app.use(cors())
 

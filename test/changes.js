@@ -17,10 +17,11 @@ describe('changes', function () {
     let docs = testUtils.makeDocs(docCount)
     let remote = null
     let seq1 = ''
-    let id, rev, response, remoteURL
+    let id, rev, response, remoteURL, user
 
     try{
       remoteURL = await testUtils.createUser();
+      user= remoteURL.split(':')[1].substring(2);
       remote = new PouchDB(remoteURL)
       docs = await remote.bulkDocs(docs);
       await wait(1000)
@@ -32,6 +33,9 @@ describe('changes', function () {
 
       // Update a document
       let newDoc = testUtils.makeDocs(1)[0]
+
+      //make sure doc has proper access
+      newDoc = Object.assign(newDoc, {meta_access:{users:{[user]:{r:true,w:true}}}});
       newDoc._id = response.results[0].id
       newDoc._rev = response.results[0].changes[0].rev
       
@@ -41,7 +45,7 @@ describe('changes', function () {
       await wait(1000)
 
       response = await remote.changes({ since: seq1 })
-
+      console.log(response);
       // testUtils.d('FINAL', response);
       assert.strictEqual(response.results.length, 1,
         'Changes feed should contain single entry')

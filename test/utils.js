@@ -17,10 +17,20 @@ var testUtils = {}
 var userCount = 0
 
 // Delete specified databases
-testUtils.cleanup = function (dbs, done) {
+testUtils.cleanup = async (dbs, done) => {
   env.setup()
-
+  
+  /*const nano = await require('nano')(app.serverURL);
+  const couchdbs = await nano.db.list();
+  couchdbs.forEach(async db=>{
+    if(db.startsWith('envoy1')){
+      await nano.db.destroy(db);
+    }
+  });
+  */
+ 
   var num = dbs.length
+  
 
   var finished = function () {
     if (--num === 0) {
