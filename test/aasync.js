@@ -3,9 +3,9 @@
 /* globals testUtils */
 
 var PouchDB = require('pouchdb')
-var pouchdbDebug = require('pouchdb-debug');
-PouchDB.plugin(pouchdbDebug);
-PouchDB.debug.enable('*');
+//var pouchdbDebug = require('pouchdb-debug');
+//PouchDB.plugin(pouchdbDebug);
+//PouchDB.debug.enable('*');
 
 var assert = require('assert')
 const wait = (ms) => {
@@ -14,7 +14,7 @@ const wait = (ms) => {
   })
 }
 
-PouchDB.debug.enable('*');
+// PouchDB.debug.enable('*');
 
 // Generate a bunch of documents, and store those in a local
 // PouchDB. Kick off a push replication, and then query remote
@@ -67,6 +67,11 @@ describe('test single user sync', function () {
       assert(false);
     }
   })
+
+  it('unending loop', (done) =>{
+
+    console.log('looping');
+  });
 
   it('pull replication', async () => {
     try{
