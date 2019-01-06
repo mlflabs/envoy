@@ -5,6 +5,11 @@
 var assert = require('assert')
 
 var PouchDB = require('pouchdb')
+const wait = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
 
 describe('GET all_docs', function () {
   it('GET /db/_all_docs with no parameters', async () => {
@@ -20,7 +25,7 @@ describe('GET all_docs', function () {
     const remoteURL = await testUtils.createUser();
     remote = new PouchDB(remoteURL)
     response = await remote.bulkDocs(docs);
-     
+    wait(1000);
     assert.strictEqual(response.length, docCount, response)
     response.forEach(function (row) {
         assert(!row.error)
@@ -29,29 +34,27 @@ describe('GET all_docs', function () {
     const remoteURL2 = await testUtils.createUser()
     remote2 = new PouchDB(remoteURL2)
     response = remote2.bulkDocs(docs2)
-   
+    wait(1000);
     data = await remote.allDocs()
 
     assert.strictEqual(typeof data, 'object')
     assert.strictEqual(typeof data.rows, 'object')
     // feature not implemented, always defaults to 0
-    /* assert.strictEqual(data.rows.length, docCount)
-    data.rows.forEach(function (row) {
-        
-    assert.strictEqual(typeof row, 'object')
-      assert.strictEqual(typeof row.id, 'string')
-      assert.strictEqual(typeof row.key, 'string')
-      assert.strictEqual(typeof row.value, 'object')
-      assert.strictEqual(typeof row.doc, 'undefined')
-      assert.strictEqual(row.id, row.key)
+    assert.strictEqual(data.rows.length, docCount)
+    data.rows.forEach(function (row) { 
+        assert.strictEqual(typeof row, 'object')
+        assert.strictEqual(typeof row.id, 'string')
+        assert.strictEqual(typeof row.key, 'string')
+        assert.strictEqual(typeof row.value, 'object')
+        assert.strictEqual(typeof row.doc, 'undefined')
+        assert.strictEqual(row.id, row.key)
     })
-    */
+    
      
     data = await remote2.allDocs()
     assert.strictEqual(typeof data, 'object')
     assert.strictEqual(typeof data.rows, 'object')
     //not implmented, will always give you 0
-    /*
     assert.strictEqual(data.rows.length, docCount * 2)
     data.rows.forEach(function (row) {
       assert.strictEqual(typeof row, 'object')
@@ -61,7 +64,7 @@ describe('GET all_docs', function () {
       assert.strictEqual(typeof row.doc, 'undefined')
       assert.strictEqual(row.id, row.key)
     })
-    */
+    
 
   })
 
@@ -89,7 +92,7 @@ describe('GET all_docs', function () {
     
     // ensure we can retrieve what we inserted
     // not implemented
-    /*
+
     data = await remote.allDocs({ include_docs: true })
     assert.strictEqual(typeof data, 'object')
     assert.strictEqual(typeof data.rows, 'object')
@@ -102,9 +105,8 @@ describe('GET all_docs', function () {
       assert.strictEqual(row.id, row.key)
       assert.strictEqual(typeof row.doc, 'object')
     })
-    */
 
-    /*
+
     data = await remote2.allDocs({ include_docs: true })
     assert.strictEqual(typeof data, 'object')
     assert.strictEqual(typeof data.rows, 'object')
@@ -117,7 +119,7 @@ describe('GET all_docs', function () {
       assert.strictEqual(row.id, row.key)
       assert.strictEqual(typeof row.doc, 'object')
     })
-    */
+
  
   })
 

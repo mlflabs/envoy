@@ -10,45 +10,61 @@ var PouchDB = require('pouchdb')
 
 describe('POST /all_docs', function () {
   var docCount = 5
-
   var docs = null
-
   var docs2 = null
-
   var url1 = null
-
   var res1 = null
-
   var remote = null
-
   var remote2 = null
 
-  before(function () {
+  const wait = (ms) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms)
+    })
+  }
+  
+
+  before(async () => {
     // create two users, one who has 5 docs, the other 10, in the
     // the same database. Ensure that each user gets only their own data
     docs = testUtils.makeDocs(docCount)
     docs2 = testUtils.makeDocs(docCount * 2)
+    let user1, user2, access1, access2;
+    
 
-    return testUtils.createUser().then(function (remoteURL) {
+    return testUtils.createUser().then((remoteURL) => {
       remote = new PouchDB(remoteURL)
       url1 = remoteURL.replace(/\/[a-z0-9]+$/, '')
+      user1 = remoteURL.split(':')[1].substring(2);
+      access1 = {meta_access: { users: { [user1]: { r: true, w: true } } } };
+      console.log(user1);
+      console.log(access1);
+      docs = docs.map(d =>{
+        return {...d, ...access1};
+      });
+
       return remote.bulkDocs(docs)
     }).then(function (response) {
       res1 = response
       assert.strictEqual(response.length, docCount, response)
-      response.forEach(function (row) {
+      response.forEach((row) => {
         assert(!row.error)
       })
       return testUtils.createUser()
-    }).then(function (remoteURL2) {
+    }).then(async (remoteURL2) => {
+      user2 = remoteURL2.split(':')[1].substring(2);
+      access2 = {meta_access: { users: { [user2]: { r: true, w: true } } } };
+      docs2 = docs2.map(d =>{
+        return {...d, ...access2};
+      });
+
       remote2 = new PouchDB(remoteURL2)
-      return remote2.bulkDocs(docs2)
+      const res2  = await remote2.bulkDocs(docs2)
+      return res2
     })
   })
 
-  it('POST /db/_all_docs with no parameters', function (done) {
-    /* TODO: not implemented 
-    
+  it('POST /db/_all_docs with no parameters', (done) => {
     var cloudant = require('nano')(url1)
     var r = {
       method: 'post',
@@ -68,10 +84,8 @@ describe('POST /all_docs', function () {
         assert.strictEqual(typeof row.doc, 'object')
         assert.strictEqual(row.id, row.key)
       })
-      done()
+      done();
     })
-    */
-    done();
   })
 
   it('POST /db/_all_docs with keys parameters', function (done) {
