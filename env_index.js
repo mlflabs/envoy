@@ -1,3 +1,2 @@
-#!/usr/bin/env node
-
+require('dotenv').config()
 var envoy = require('./app')();
