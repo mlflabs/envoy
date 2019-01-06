@@ -50,29 +50,17 @@ describe('test single user sync', function () {
 
       const res1 = await local.bulkDocs(docs);
       let t = await local.allDocs();
-      //local.replicate.to(remote);
-      //await wait(5000)
-      //assert.strictEqual(response.rows.length, docs.length)
-      local.replicate.to(remote).on('complete', async () => {
-        response = await remote.allDocs();
-        assert.strictEqual(response.rows.length, docs.length)
-      }).on('error', err => {
-        console.log(err);
-        console.log(err.message);
-        assert(false);
-      });
+      local.replicate.to(remote);
+      await wait(1000)
+      response = await remote.allDocs();
+      assert.strictEqual(response.rows.length, docs.length)
     }
     catch(err){
-      console.log(err)
       assert(false);
     }
   })
 
-  it('unending loop', (done) =>{
-
-    console.log('looping');
-  });
-
+ 
   it('pull replication', async () => {
     try{
       let local = new PouchDB(dbs.local)
@@ -82,14 +70,13 @@ describe('test single user sync', function () {
       remoteURL = await testUtils.createUser();
       remote = new PouchDB(remoteURL)
       await remote.bulkDocs(docs)
+      await wait(1000)
       local.replicate.from(remote)
       await wait(1000)
       response = await local.allDocs({ include_docs: true });
-      console.log(response)
       assert.strictEqual(response.total_rows, docs.length)
     }
     catch(err){
-      console.log(err)
       assert(false);
     }
   })

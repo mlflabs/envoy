@@ -22,30 +22,14 @@ coverage
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-
-# Dependency directory
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
-
-# The run scripts people might use
-*.sh
 
 # vscode
 .vscode
 jsconfig.json
 
-# dotenv config
-.env
-config_scripts
-
-# test script
-test.sh
-
-# databases
-*.sqlite
-data/*
 
 #debug scripts
 pouchdb7
+test.sh
+test

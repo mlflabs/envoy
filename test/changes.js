@@ -45,7 +45,6 @@ describe('changes', function () {
       await wait(1000)
 
       response = await remote.changes({ since: seq1 })
-      console.log(response);
       // testUtils.d('FINAL', response);
       assert.strictEqual(response.results.length, 1,
         'Changes feed should contain single entry')
