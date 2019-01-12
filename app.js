@@ -118,13 +118,13 @@ module.exports = (opts) => {
         //process.exit(1)
       }
 
-      
+      main()
 
       console.log('[OK]  main: Started app on', app.opts.url)
     }
   )
 
-  main()
+
 
   return app
 }

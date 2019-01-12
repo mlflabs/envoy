@@ -33,8 +33,7 @@ describe('GET all_docs', function () {
 
     const remoteURL2 = await testUtils.createUser()
     remote2 = new PouchDB(remoteURL2)
-    response = remote2.bulkDocs(docs2)
-    wait(1000);
+    response = await remote2.bulkDocs(docs2)
     data = await remote.allDocs()
 
     assert.strictEqual(typeof data, 'object')

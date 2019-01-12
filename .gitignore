@@ -49,3 +49,4 @@ data/*
 
 #debug scripts
 pouchdb7
+pouchdata
