@@ -40,8 +40,6 @@
     "jsonwebtoken": "^8.4.0",
     "morgan": "^1.9.1",
     "nano": "^7.1.0",
-    "pouchdb": "7.0.0",
-    "pouchdb-server": "^4.1.0",
     "request": "^2.88.0",
     "uuid": "^3.3.2"
   },
