@@ -25,6 +25,3 @@ const envoy = require('../../app')();
 envoy.events.on('listening', function() {
   console.log('[OK]  Server is up: ', envoy.opts.port);
 });
-
-const testUtils = require('../../test/utils');
-   
